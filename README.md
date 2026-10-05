@@ -45,7 +45,7 @@ The application provides a vehicle dashboard with:
 ### Requirements
 
 - Android Studio with a recent stable Android SDK
-- JDK 17
+- JDK 11
 - Android device or emulator
 - Internet connection for the mock API
 
@@ -123,7 +123,7 @@ Mock REST API
 com.simple.energy
 │
 ├── core
-│   ├── Result.kt
+│   ├── ApiResult.kt
 │   └── network
 │       └── SafeApiCall.kt
 │
@@ -263,7 +263,7 @@ During refresh, the existing vehicle information remains visible instead of repl
 
 ## Error Handling
 
-Network/API calls are wrapped using `safeApiCall`.
+Network/API calls are wrapped using `safeApiCall`, this let us handle edge cases and failures.
 
 It handles:
 
@@ -277,7 +277,8 @@ It handles:
 
 # Testing
 
-Unit tests are included for the main data and presentation flows.
+Unit tests include the main data and presentation flows.
+Used backticked naming convention for easy to understand.
 
 ### Repository Tests
 
@@ -311,25 +312,22 @@ kotlinx-coroutines-test
 
 ### Assumptions
 
-1. The provided REST API returns the expected vehicle fields and data types.
+1. The REST Api we are using returns static data.
 
-2. The vehicle ID is unique and is used to retrieve individual vehicle details.
+2. The vehicle ID is unique key for detail fetching.
 
 3. The mock API is available during application execution.
 
-4. Vehicle data does not require authentication for this assessment.
-
-5. The application is primarily demonstrating the Android client architecture rather than production backend infrastructure.
 
 ### Limitations
 
 1. **Mock API**
 
-   The application currently uses Beeceptor instead of a production backend.
+   Using Beeceptor for mocking API (50 call/day is allowed).
 
 2. **No local persistence**
 
-   Vehicle data is not persisted locally. If the API is unavailable, previously fetched data is not restored after the application is restarted.
+   No offline persistent caching of data only in memory state caching.
 
 3. **No authentication**
 
@@ -337,17 +335,13 @@ kotlinx-coroutines-test
 
 4. **No real-time vehicle updates**
 
-   Vehicle information is retrieved through REST API calls. There is no WebSocket/MQTT-based real-time telemetry.
+   Vehicle information is completely static no dynamic values.
 
-5. **No offline synchronization**
-
-   The application does not currently queue or synchronize changes while offline.
-
-6. **Last updated timestamp**
+5. **Last updated timestamp**
 
    The timestamp is displayed directly from the API response and is not converted into a localized relative-time representation.
 
-7. **Production observability**
+6. **Production observability**
 
    Crash reporting, analytics, performance monitoring and production logging are not included because they are outside the scope of the assessment.
 
