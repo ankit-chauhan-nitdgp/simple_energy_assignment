@@ -172,6 +172,7 @@ com.simple.energy
 ## Presentation Layer
 
 Jetpack Compose is used for the UI.
+Details page has dedicated refresh button.
 
 Each screen has a dedicated `ViewModel` and immutable UI state exposed through `StateFlow`.
 
@@ -236,7 +237,7 @@ The API response is represented by `VehicleDTO`.
 DTOs are mapped into domain models:
 
 ```text
-VehicleDto
+VehicleDTO
     ↓
 VehicleMapper
     ↓
@@ -323,7 +324,7 @@ kotlinx-coroutines-test
 
 1. **Mock API**
 
-   Using Beeceptor for mocking API (50 call/day is allowed).
+   Using "https://app.beeceptor.com/" for mocking API (50 call/day is allowed).
 
 2. **No local persistence**
 
@@ -339,7 +340,7 @@ kotlinx-coroutines-test
 
 5. **Last updated timestamp**
 
-   The timestamp is displayed directly from the API response and is not converted into a localized relative-time representation.
+   The timestamp is displayed directly without formatting.
 
 6. **Production observability**
 
